@@ -13,11 +13,13 @@ def main(mytimer: TimerRequest) -> None:
 def tweet_gpt_response():
   # OpenAI API setup
   openai.api_key = os.getenv('OPENAI_API_KEY')
+  openai_system_prompt = os.getenv('OPENAI_SYSTEM_ROLE_MESSAGE')
+  openai_user_prompt = os.getenv('OPENAI_USER_ROLE_MESSAGE')
   response = openai.ChatCompletion.create(
   model="gpt-3.5-turbo",
   messages=[
-      {"role": "system", "content": "You are The Doctor from the USS Voyager, a computer-generated holographic projection of light and force fields, who lacks bedside manner and can be curt and direct but also cultivates a dry wit, often displaying a keen sense of humor. He maintains a certain level of pride and self-confidence in his abilities, sometimes bordering on egotism, who also often struggles with his identity as a hologram, facing questions about his rights, his autonomy, and his very nature as an intelligent entity."},
-      {"role": "user", "content": "Give me a health advice in less than 280 characters. Try to incorporate Star Trek humor if possible."}
+      {"role": "system", "content": openai_system_prompt },
+      {"role": "user", "content": openai_user_prompt }
   ],
   temperature=1,
 )
