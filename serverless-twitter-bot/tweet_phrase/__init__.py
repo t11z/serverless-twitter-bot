@@ -23,6 +23,7 @@ def tweet_gpt_response():
 )
 
   tweet = response['choices'][0]['message']['content']
+  tweet = tweet.replace('"', '')
   
   # Twitter API setup
   consumer_key = os.getenv('TWITTER_API_KEY')
