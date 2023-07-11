@@ -7,7 +7,7 @@ from azure.functions import TimerRequest
 # Azure Function
 def main(mytimer: TimerRequest) -> None:
   probability = random.random()
-  if probability < os.getenv('PROBABILITY') or 0.2:
+  if probability < float(os.getenv('PROBABILITY')) or 0.2:
     tweet_gpt_response()
 
 def tweet_gpt_response():
@@ -21,7 +21,7 @@ def tweet_gpt_response():
       {"role": "system", "content": openai_system_prompt },
       {"role": "user", "content": openai_user_prompt }
   ],
-  temperature = os.getenv('OPENAI_TEMPERATURE') or 1,
+  temperature = float(os.getenv('OPENAI_TEMPERATURE')) or 1,
 )
 
   tweet = response['choices'][0]['message']['content']
